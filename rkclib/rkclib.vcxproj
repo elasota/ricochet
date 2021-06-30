@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{603DE281-ADAA-4323-AC1B-8AC5DF8830C9}</ProjectGuid>
+    <RootNamespace>rkclib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Release.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="ArraySliceView.h" />
+    <ClInclude Include="ArrayTools.h" />
+    <ClInclude Include="BigSBinFloat.h" />
+    <ClInclude Include="BigUBinFloatProto.h" />
+    <ClInclude Include="BigUDecFloatProto.h" />
+    <ClInclude Include="BigUFloat.h" />
+    <ClInclude Include="BitUtils.h" />
+    <ClInclude Include="CharCodes.h" />
+    <ClInclude Include="Cloner.h" />
+    <ClInclude Include="Comparer.h" />
+    <ClInclude Include="CoreDefs.h" />
+    <ClInclude Include="FloatSpec.h" />
+    <ClInclude Include="Hasher.h" />
+    <ClInclude Include="ModuleDef.h" />
+    <ClInclude Include="MoveOrCopy.h" />
+    <ClInclude Include="HashMap.h" />
+    <ClInclude Include="IAllocator.h" />
+    <ClInclude Include="IDestructible.h" />
+    <ClInclude Include="IStream.h" />
+    <ClInclude Include="Lexer.h" />
+    <ClInclude Include="Nothing.h" />
+    <ClInclude Include="NumStr.h" />
+    <ClInclude Include="NumUtils.h" />
+    <ClInclude Include="Optional.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="Placeholder.h" />
+    <ClInclude Include="DecBin.h" />
+    <ClInclude Include="RCPtr.h" />
+    <ClInclude Include="RefCounted.h" />
+    <ClInclude Include="Result.h" />
+    <ClInclude Include="ResultCode.h" />
+    <ClInclude Include="rkccore.h" />
+    <ClInclude Include="rkclib.h" />
+    <ClInclude Include="StaticArray.h" />
+    <ClInclude Include="Tuple.h" />
+    <ClInclude Include="TypeTuple.h" />
+    <ClInclude Include="Unicode.h" />
+    <ClInclude Include="Vector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BigUDecFloat.cpp" />
+    <ClCompile Include="DecBin.cpp" />
+    <ClCompile Include="BitUtils.cpp" />
+    <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="NumStr.cpp" />
+    <ClCompile Include="NumUtils.cpp" />
+    <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="Result.cpp" />
+    <ClCompile Include="rkclib.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Test_BigAtof.cpp" />
+    <ClCompile Include="Unicode.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

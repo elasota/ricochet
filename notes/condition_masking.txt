@@ -1,0 +1,110 @@
+Control flow masking:
+
+
+GENERAL PROBLEM:
+Ricochet's top-level program parser interprets the program as a series of statements, including compound statements that contain multiple other statements.  However, statements may contain high-level "break" or "continue" statements which cause non-nested control flow, and Ricochet needs to convert these into nested control flow scopes in SIMD backends.
+
+
+The transformation of loops are as follows:
+
+
+for (initialStatement, condition, stepStatement) actionStatement -->
+
+initialStatement
+breakableStatement(break):
+	loop
+	{
+		if (!condition)
+			break
+
+		breakableStatement(continue):
+			actionStatement
+		stepStatement
+	}
+
+
+while (condition) statement -->
+
+breakableStatement(break):
+	loop
+	{
+		if (!condition)
+			break
+
+		breakableStatement(continue):
+			statement
+	}
+
+========================================================================
+CONTINUATION INTENTIONS:
+
+All statements are executed within a stack of continuation intention (CI) flags corresponding to the breakable scopes that cause divergences in execution.
+
+If a break statement occurs, then the break is applied to all CI flags on the stack that are within the scope of the targeted breakableStatement.
+
+
+When a statement within a breakable scope is complete, it completes with one of two continuation intentions: Break, or continue.
+
+It also has one of three continuation intention possibilities (CIPs):
+- ContinueOnly
+- BreakOnly
+- ContinueOrBreak
+
+
+LOOP STATEMENTS:
+
+The CIP of a loop statement is always BreakOnly.
+
+If the CIP of the inner statement of a loop is ContinueOnly then the program is invalid.
+If the CIP of the inner statement is BreakOnly then the loop is converted to a dead loop.
+If the CIP of the inner statement is ContinueOrBreak then it's transformed to:
+
+keepExecuting = true
+do
+	ciExecute(keepExecuting)
+		statement
+while(keepExecuting)
+
+
+COMPOUND STATEMENTS:
+
+The CIP of a compound statement is BreakOnly if it contains any BreakOnly statements.
+The CIP of a compound statement is ContinueOnly if it contains only ContinueOnly statements.
+The CIP of a compound statement is ContinueOrBreak if it contains any ContinueOrBreak statements, but no BreakOnly statements.
+
+If the CIP of a statement in a compound statement is ContinueOnly then there is no change.
+If the CIP of a statement in a compound statement is BreakOnly then all following statements are converted to dead.
+If the CIP of a statement in a compound statement is ContinueOrBreak AND there are following statements, then it is transformed to:
+
+keepExecuting = true
+ciExecute(keepExecuting)
+	statement
+if (keepExecuting)
+	followingStatements
+
+
+IF/ELSE STATEMENTS:
+
+If/else statements are transformed into the following:
+
+execMask = condition
+elseMask = ~execMask
+if (execMask)
+	ifStatement
+if (elseMask)
+	elseStatement
+
+The CIP of an if/else statement is determined by the CIP of ifStatement and elseStatement.
+If both are "break only," then the CIP of the if/else statement is "break only."
+If both are "continue only," then the CIP of the if/else statement is "continue only."
+If either statement is "both" or the ifStatement and elseStatement have different CIP, then the CIP of the if/else statement is "both."
+
+
+========================================================================
+KE FLAG NARROWING:
+
+When a ciExecute is inside of another ciExecute, a break can either trigger the inner flag, but not the outer flag, or trigger both the inner flag and the outer flag.
+
+If only the latter occurs, then the inner flag is insignificant.
+
+KE flags are flagged as significant only if they are the outermost flag affected by a break.  Insignificant flags are combined into their outermost significant parent.

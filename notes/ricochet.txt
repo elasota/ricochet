@@ -1,0 +1,69 @@
+Ricochet language:
+
+Ricochet is a transpile-oriented SPMD language, aimed at allowing efficient creation of SIMD code, GPU compute kernels, and retargetable shading code.
+
+Ricochet belongs approximately to the "curly brace" family of languages, with a few important distinctions designed for readable transpiling:
+- Indentation must match in nested code blocks.
+- Newlines are lexically significant and can not break up expressions.
+- Comments are treated as statements: Block comments may not occur on the same lines as other comments.
+
+Arithmetic precision and numeric ranges:
+CPU SIMD code favors small value sizes, whereas other targets favor more consistent precision.  At the same time, arithmetic precision mishandling is a common source of errors.  To address this, Ricochet favors a pessimistic approach to arithmetic precision and employs a model where the output precision of arithmetic operations is consistent.
+
+All Ricochet integer types have a valid range that includes at least one number, and Ricochet can be compiled with range checks.  Typically the range is defined by bits and signedness, but you can define numbers of arbitrary range.
+
+All integer arithmetic operations in Ricochet have an output range, and Ricochet can be compiled with checks that ensure that the result falls within the output range.  When overflow checking is not enabled, the behavior of overflowing integers is undefined.  Normally, arithmetic operations in Ricochet require that both inputs have the same range, and produce an output with the same range.
+
+Floating point precision:
+Ricochet supports 3 floating point types: Double-precision, single-precision, and half-precision.
+
+
+Boolean strong typing:
+Boolean types in Ricochet are strongly-typed according to what type of comparison they performed.
+
+
+Imports and exports:
+All symbols in a Ricochet module have one of three scopes:
+- local (default): Visible only within the module.
+- export: Visible to modules that import the module.
+- globalexport: Visible to any modules that import the module and also visible to any module that imports
+
+
+Integer methods:
+- operator+: Adds 2 integers of the same type, returns a result of the same type.
+- operator-: Subtracts an integer of the same type, returns a result of the same type.
+- operator*: Subtracts 2 integers of the same type, returns a result of the same type.
+- operator/: Subtracts 2 integers of the same type, returns a result of the same type.
+- mul<sp>: Multiplies 2 integers of different type, returns an integer of a new type.
+
+
+Templates:
+Ricochet supports generic functions and types.  Generic function parameters may be either values or type names, which are used to resolve the types in the generic definition.
+
+Example:
+void MyFunction<TypeA, TypeB>(TypeA a, typename TypeB)
+	where TypeA : IMyInterfaceA, IMyInterfaceB<TypeB>
+{
+}
+
+template<TypeA, TypeB>
+where T : Arithmetic<T>, 
+
+
+Grammar:
+Floating point specification:
+floatspec "<" <signed|unsigned> "frac" <fractional bits> "exp" <exponent bits> "bias" <exponent bias> ">" <name> ";"
+
+Integer specification:
+intspec "<" <minimum> ".." <maximum> ">" <name> ";"
+
+Boolean specification:
+boolspec "<" <type> ">" name ";"
+
+
+Ricochet API:
+- RkcLoadModuleText: Loads a single module.
+- RkcCompositeAddProgram: Adds a program to a composite.
+- RkcCompositeGetUnresolvedImports: Returns a list of unresolved imports, and the location that they were requested.
+- RkcCompositeCompile: Compiles a composite.
+- RkcCompiledProgramExport: Exports a compiled program.

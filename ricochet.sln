@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1500
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rkc", "rkc\rkc.vcxproj", "{A0B47213-E0AA-4F11-A4D3-9DE63F5B3BAB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rkclib", "rkclib\rkclib.vcxproj", "{603DE281-ADAA-4323-AC1B-8AC5DF8830C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0B47213-E0AA-4F11-A4D3-9DE63F5B3BAB}.Debug|x64.ActiveCfg = Debug|x64
+		{A0B47213-E0AA-4F11-A4D3-9DE63F5B3BAB}.Debug|x64.Build.0 = Debug|x64
+		{A0B47213-E0AA-4F11-A4D3-9DE63F5B3BAB}.Release|x64.ActiveCfg = Release|x64
+		{A0B47213-E0AA-4F11-A4D3-9DE63F5B3BAB}.Release|x64.Build.0 = Release|x64
+		{603DE281-ADAA-4323-AC1B-8AC5DF8830C9}.Debug|x64.ActiveCfg = Debug|x64
+		{603DE281-ADAA-4323-AC1B-8AC5DF8830C9}.Debug|x64.Build.0 = Debug|x64
+		{603DE281-ADAA-4323-AC1B-8AC5DF8830C9}.Release|x64.ActiveCfg = Release|x64
+		{603DE281-ADAA-4323-AC1B-8AC5DF8830C9}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31635FCE-CA5B-46FC-86DF-2DBA558F98CA}
+	EndGlobalSection
+EndGlobal
